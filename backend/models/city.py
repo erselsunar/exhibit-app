@@ -1,13 +1,8 @@
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, declarative_base
-import os
-from dotenv import load_dotenv
+from sqlalchemy import Column, Integer, String
+from database.base import Base
 
-load_dotenv()
+class City(Base):
+    __tablename__ = "city"
 
-DATABASE_URL = os.getenv("DATABASE_URL")
-
-engine = create_engine(DATABASE_URL)
-SessionLocal = sessionmaker(bind=engine)
-
-Base = declarative_base()
+    id = Column(Integer, primary_key=True, index=True)
+    city_name = Column(String(40), nullable=False)

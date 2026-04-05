@@ -1,13 +1,17 @@
-from fastapi import FastAPI
-from database import Base, engine
-
-# modelleri import et (çok önemli!)
-from models import city, venue, expo, bp, booth
+""" from fastapi import FastAPI
 
 app = FastAPI()
 
-Base.metadata.create_all(bind=engine)
-
 @app.get("/")
-def root():
-    return {"message": "API çalışıyor 🚀"}
+def read_root():
+    return {"message": "API is running"} """
+
+from sqlalchemy import create_engine
+
+engine = create_engine("postgresql://postgres:1245*@localhost:5432/Exhibit")
+
+try:
+    conn = engine.connect()
+    print("✅ DB bağlantısı başarılı")
+except Exception as e:
+    print("❌ Hata:", e)
