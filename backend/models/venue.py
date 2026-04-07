@@ -1,9 +1,9 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
-from database import Base
+from database.base import Base
 
 class Venue(Base):
-    __tablename__ = "venues"
+    __tablename__ = "venue"
 
-    id = Column(Integer, primary_key=True)
-    name = Column(String)
-    city_id = Column(Integer, ForeignKey("cities.id"))
+    id = Column(Integer, primary_key=True, index=True)
+    venue_name = Column(String(40), nullable=False)
+    city_id = Column(Integer, ForeignKey("city.id"), nullable=False)
