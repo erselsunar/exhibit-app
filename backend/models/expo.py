@@ -13,4 +13,4 @@ class Expo(Base):
     start_date = Column(Date)
     end_date = Column(Date)
 
-    expo_mgmt_id = Column(Integer, ForeignKey("expo_mgmt.id"), nullable=False)
+    expo_mgmt_id = Column(Integer, ForeignKey("expo_management.id"), nullable=False)

@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, String
 from database.base import Base
 
 class ExpoMgmt(Base):
-    __tablename__ = "expo_mgmt"
+    __tablename__ = "expo_management"
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(40), nullable=False)
