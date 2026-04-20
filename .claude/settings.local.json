@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -c \"import openpyxl; print\\('openpyxl ok'\\)\")",
+      "Bash(pip install *)",
+      "Bash(python -c \"import openpyxl; print\\('ok'\\)\")",
+      "Bash(python -c \"from reportlab.lib.pagesizes import letter; print\\('reportlab ok'\\)\")",
+      "Bash(python -c \"from routes.pdf_routes import router; print\\('pdf_routes ok'\\)\")",
+      "Bash(pip freeze *)"
+    ]
+  }
+}

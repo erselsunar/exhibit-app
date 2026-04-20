@@ -6,10 +6,10 @@ class Booth(Base):
 
     id = Column(Integer, primary_key=True, index=True)
 
-    booth_id = Column(String(10), nullable=False)
+    booth_id = Column(String(50), nullable=False)
     expo_id = Column(Integer, ForeignKey("expo.id"), nullable=False)
 
-    partner_id = Column(Integer, nullable=True)
+    partner_id = Column(Integer, ForeignKey("clients.id"), nullable=True)
 
-    dimension = Column(String(30))
-    uom = Column(String(3))
+    dimension = Column(String(50))
+    uom = Column(String(50))

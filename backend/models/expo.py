@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, Date, ForeignKey
+from sqlalchemy.orm import relationship
 from database.base import Base
 
 class Expo(Base):
@@ -14,3 +15,6 @@ class Expo(Base):
     end_date = Column(Date)
 
     expo_mgmt_id = Column(Integer, ForeignKey("expo_management.id"), nullable=False)
+    
+    expo_mgmt = relationship("ExpoMgmt", back_populates="expos")
+    venue = relationship("Venue")

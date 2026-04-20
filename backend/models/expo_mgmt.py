@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String
+from sqlalchemy.orm import relationship
 from database.base import Base
 
 class ExpoMgmt(Base):
@@ -9,3 +10,5 @@ class ExpoMgmt(Base):
     contact_person = Column(String(100))
     email = Column(String(100))
     phone = Column(String(30))
+    
+    expos = relationship("Expo", back_populates="expo_mgmt")

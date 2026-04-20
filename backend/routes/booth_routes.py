@@ -1,9 +1,12 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from database.session import get_db
 
-from schemas.booth import BoothCreate, BoothResponse
-from services.booth_service import *
+from schemas.booth import BoothCreate, BoothUpdate, BoothResponse
+from services.booth_service import (
+    create_booth, get_booths_by_expo, get_booth_by_id,
+    update_booth, delete_booth
+)
 
 router = APIRouter()
 
@@ -11,15 +14,20 @@ router = APIRouter()
 def read_booths(expo_id: int, db: Session = Depends(get_db)):
     return get_booths_by_expo(db, expo_id)
 
+@router.get("/{booth_id}", response_model=BoothResponse)
+def read_booth(booth_id: int, db: Session = Depends(get_db)):
+    return get_booth_by_id(db, booth_id)
 
 @router.post("/", response_model=BoothResponse)
 def create(data: BoothCreate, db: Session = Depends(get_db)):
     return create_booth(db, data)
 
-
-@router.get("/{booth_id}", response_model=BoothResponse)
-def read_booth(booth_id: int, db: Session = Depends(get_db)):
-    return get_booth_by_id(db, booth_id)
+@router.put("/{booth_id}", response_model=BoothResponse)
+def update(booth_id: int, data: BoothUpdate, db: Session = Depends(get_db)):
+    updated = update_booth(db, booth_id, data)
+    if not updated:
+        raise HTTPException(status_code=404, detail="Booth bulunamadı!")
+    return updated
 
 @router.delete("/{booth_id}")
 def delete(booth_id: int, db: Session = Depends(get_db)):
