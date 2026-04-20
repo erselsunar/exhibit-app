@@ -94,7 +94,16 @@ export default function BulkUploadPage() {
           </Link>
         </div>
 
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Excel ile Toplu Yükleme</h1>
+        <div className="flex items-center justify-between mb-2">
+          <h1 className="text-3xl font-bold text-gray-900">Excel ile Toplu Yükleme</h1>
+          <a
+            href={`${BASE_URL}/bulk-upload/template`}
+            download
+            className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 text-gray-700 text-sm font-medium rounded-xl hover:bg-gray-50 transition-colors shadow-sm"
+          >
+            ⬇ Template İndir
+          </a>
+        </div>
         <p className="text-gray-500 mb-8">Excel dosyanızı yükleyin, veriler aşağıda önizleme olarak görüntülenecek.</p>
 
         {/* Expected columns */}

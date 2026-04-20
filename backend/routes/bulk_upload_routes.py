@@ -1,5 +1,7 @@
 from fastapi import APIRouter, UploadFile, File, HTTPException
+from fastapi.responses import StreamingResponse
 import openpyxl
+from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
 import io
 from datetime import date, datetime
 from typing import Any
@@ -79,3 +81,38 @@ async def bulk_upload_preview(file: UploadFile = File(...)):
         result.append(record)
 
     return {"rows": result, "total": len(result)}
+
+
+@router.get("/bulk-upload/template")
+def bulk_upload_template():
+    wb = openpyxl.Workbook()
+    ws = wb.active
+    ws.title = "Template"
+
+    headers = ["Client", "City", "Venue", "Expo Name", "Expo Start Date", "Expo End Date", "Expo Management", "Booth No"]
+
+    header_font = Font(bold=True, color="000000")
+    header_fill = PatternFill(start_color="FFD700", end_color="FFD700", fill_type="solid")
+    header_align = Alignment(horizontal="center", vertical="center")
+    thin_side = Side(style="thin", color="000000")
+    header_border = Border(left=thin_side, right=thin_side, top=thin_side, bottom=thin_side)
+
+    for col_idx, header in enumerate(headers, start=1):
+        cell = ws.cell(row=1, column=col_idx, value=header)
+        cell.font = header_font
+        cell.fill = header_fill
+        cell.alignment = header_align
+        cell.border = header_border
+        ws.column_dimensions[cell.column_letter].width = max(len(header) + 4, 16)
+
+    ws.row_dimensions[1].height = 20
+
+    buf = io.BytesIO()
+    wb.save(buf)
+    buf.seek(0)
+
+    return StreamingResponse(
+        buf,
+        media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        headers={"Content-Disposition": "attachment; filename=exhibit-template.xlsx"},
+    )
